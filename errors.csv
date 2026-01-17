@@ -1,0 +1,51 @@
+error_code,context,solution_hint
+SyntaxError,print "Hello World",In Python 3, print is a function. Use print("Hello World").
+IndentationError,def my_func():\nprint("hello"),The body of the function must be indented.
+NameError,print(undefined_var),The variable 'undefined_var' is not defined. Ensure it is assigned a value before use.
+TypeError,"Age: " + 25,Cannot concatenate string and integer. Use str(25) to convert the integer.
+ZeroDivisionError,result = 10 / 0,Division by zero is not allowed. Check your divisor.
+IndexError,my_list = [1, 2, 3]; print(my_list[5]),List index out of range. Check the list length.
+KeyError,my_dict = {"a": 1}; print(my_dict["b"]),Key 'b' is not in the dictionary. Use .get() or check if key exists.
+AttributeError,[1, 2, 3].push(4),List object has no attribute 'push'. Did you mean 'append'?
+ValueError,int("hello"),Invalid literal for int() with base 10. Ensure the string represents a number.
+ImportError,import unknown_module,No module named 'unknown_module'. Check installation or spelling.
+ModuleNotFoundError,import non_existent,No module named 'non_existent'. Install it via pip.
+TypeError,len(123),Object of type 'int' has no len(). len() works on sequences like strings and lists.
+UnboundLocalError,x = 10; def foo(): print(x); x = 20,Local variable 'x' referenced before assignment. Use 'global' or pass as argument.
+FileNotFoundError,open("missing.txt"),The file 'missing.txt' was not found. Check the path.
+TreaError,raise "Error",Exceptions must derive from BaseException. Use raise Exception("Error").
+OverflowError,import math; math.exp(1000),Math result too large. Handle large numbers or limits carefully.
+RecursionError,def foo(): foo(); foo(),Maximum recursion depth exceeded. Check base case in recursion.
+StopIteration,it = iter([1]); next(it); next(it),Iterator has no further items. Catch StopIteration or check length.
+MemoryError,x = [1] * (10**10),Out of memory. Optimize data structures or algorithms.
+NotImplementedError,def foo(): raise NotImplementedError,This method is not implemented yet.
+AssertionError,assert 1 == 2,Assertion failed. Check your assumption.
+TabError,def foo():\n\tprint("x")\n    print("y"),Inconsistent use of tabs and spaces in indentation.
+SystemError,sys.exit(),SystemError can happen on internal errors, but sys.exit() raises SystemExit.
+ReferenceError,import weakref; r = weakref.ref(obj); print(r()),Weakly-referenced object no longer exists.
+FloatingPointError,1.0 / 0.0,Float division by zero (usually raises ZeroDivisionError in Python, but can depend on config).
+EOFError,input(""),End of file reading input (e.g. user pressed Ctrl+D).
+KeyboardInterrupt,while True: pass,User interrupted execution (Ctrl+C).
+UnicodeDecodeError,b'\x80'.decode('utf-8'),'utf-8' codec can't decode byte 0x80. Check encoding.
+UnicodeEncodeError,'\uD83D'.encode('ascii'),'ascii' codec can't encode character. Use 'utf-8'.
+BlockingIOError,os.write(fd, data),Resource temporarily unavailable (non-blocking I/O).
+ConnectionRefusedError,socket.connect(('localhost', 80)),Connection refused. Check server status and port.
+TimeoutError,socket.timeout,The operation timed out.
+PermissionError,open("/root/secret", "r"),Permission denied. Check file permissions.
+IsADirectoryError,open("/tmp", "r"),Is a directory: '/tmp'. Cannot open directory as file.
+NotADirectoryError,os.listdir("/etc/hosts"),Not a directory: '/etc/hosts'.
+FileExistsError,os.makedirs("existing_dir"),File exists: 'existing_dir'. Handle existence or use exist_ok=True.
+OSError,os.remove("non_existent"),No such file or directory.
+DeprecationWarning,import imp,imp module is deprecated. Use importlib.
+RuntimeError,recursion limit,Maximum recursion depth exceeded (can be RuntimeError).
+SyntaxError,if x = 5:,Invalid syntax. Use == for comparison.
+SyntaxError,def function(a, b):,Missing body or 'pass'.
+SyntaxError,return,Return outside function.
+IndentationError,expected an indented block,Missing indentation after 'if' or 'def'.
+TypeError,None + 1,Unsupported operand type(s) for +: 'NoneType' and 'int'.
+TypeError,'a' - 'b',Unsupported operand type(s) for -: 'str' and 'str'.
+TypeError,list['a'],Type 'type' is not subscriptable (in older Python versions without generics).
+AttributeError,None.some_method(),'NoneType' object has no attribute 'some_method'.
+ValueError,list.remove(x),x not in list.
+KeyError,os.environ['MISSING_ENV'],Environment variable not found.
+LookupError,codecs.lookup('unknown'),Unknown encoding.
