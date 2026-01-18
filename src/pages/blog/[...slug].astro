@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import BlogPost from '../../layouts/BlogPost.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  // Debug: Imprime no console quantos posts foram encontrados para garantir que PT/ES estão aqui
+  console.log(`Gerando rotas para ${posts.length} posts.`);
+  
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+<BlogPost {...post.data} id={post.id} slug={post.slug} tags={post.data.tags}>
+    <Content />
+</BlogPost>

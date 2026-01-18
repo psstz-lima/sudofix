@@ -1,0 +1,74 @@
+---
+import Layout from './Layout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { GITHUB_REPO } from '../consts';
+import { type CollectionEntry, getCollection } from 'astro:content';
+
+type Props = CollectionEntry<'blog'>['data'] & {
+    id: string;
+    slug: string;
+    tags: string[];
+};
+
+const { title, description, pubDate, tags, id, slug } = Astro.props;
+
+// Related Posts Logic
+const allPosts = await getCollection('blog');
+const relatedPosts = allPosts
+    .filter(p => p.slug !== slug && p.data.tags.some(t => tags.includes(t)))
+    .slice(0, 3);
+
+const githubUrl = `https://github.com/${GITHUB_REPO}/blob/main/src/content/blog/${id}`;
+---
+
+<Layout title={title}>
+	<main class="max-w-4xl mx-auto px-4 py-8">
+		<header class="mb-8 border-b border-gray-200 dark:border-gray-800 pb-8">
+            <Breadcrumbs category={tags[0] || 'Unknown'} title={title} />
+			<h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2 font-mono">{title}</h1>
+			<p class="text-xl text-gray-600 dark:text-gray-400 mb-4">{description}</p>
+            <div class="flex gap-2 text-sm text-gray-500 dark:text-gray-500">
+                <time datetime={pubDate.toISOString()}>
+                    {pubDate.toLocaleDateString('en-us', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                    })}
+                </time>
+                <span>&bull;</span>
+                <div class="flex gap-2">
+                    {tags.map(tag => (
+                        <span class="bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded text-xs font-mono">{tag}</span>
+                    ))}
+                </div>
+            </div>
+		</header>
+		
+        <article class="prose prose-slate dark:prose-invert max-w-none prose-headings:font-mono prose-code:font-mono prose-pre:bg-gray-900 dark:prose-pre:bg-gray-950 prose-pre:text-gray-50">
+			<slot />
+		</article>
+
+        <!-- Edit on GitHub -->
+        <div class="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800 flex justify-center">
+            <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-2">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 4.438 9.8 9.958 10.521 1.259.444 1.549-.365 1.549-1.003 0-.649-.033-2.903-.04-5.006-4.665 1.838-5.748-2.618-5.748-2.618-1.077-2.695-2.661-3.327-2.661-3.327-1.524-.968.125-.972.125-.972 1.685.111 2.585 1.636 2.585 1.636 1.498 2.443 3.931 1.737 4.891 1.328.152-1.033.585-1.737 1.066-2.137-3.725-.398-7.641-1.776-7.641-7.907 0-1.747.653-3.036 1.618-4.148-.204-.492-.81-2.457.067-4.629 0 0 1.419-.43 4.652 1.69 1.348-.354 2.805-.533 4.263-.533 1.458 0 2.915.179 4.263.533 3.231-2.122 4.65-1.69 4.65-1.69.879 2.172.274 4.137.07 4.629.967 1.111 1.616 2.401 1.616 4.148 0 6.143-3.921 7.506-7.655 7.901.625.518 1.139 1.464 1.139 2.923 0 2.109-.021 3.804-.021 4.316 0 .641.288 1.454 1.558 1.001 5.516-.723 9.948-5.219 9.948-10.519 0-6.627-5.374-12-12-12z"/></svg>
+                Found a typo? Edit this page on GitHub
+            </a>
+        </div>
+
+        <!-- Related Posts -->
+        {relatedPosts.length > 0 && (
+            <div class="mt-16 border-t border-gray-200 dark:border-gray-800 pt-12">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Related Errors</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {relatedPosts.map((related) => (
+                        <a href={`/blog/${related.slug}`} class="block p-6 bg-gray-50 dark:bg-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                            <h3 class="font-mono text-sm font-bold text-gray-900 dark:text-gray-100 mb-2">{related.data.title}</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">{related.data.description}</p>
+                        </a>
+                    ))}
+                </div>
+            </div>
+        )}
+	</main>
+</Layout>

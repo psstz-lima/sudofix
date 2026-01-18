@@ -1,0 +1,51 @@
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="/pagefind/pagefind-ui.js" is:inline></script>
+<style>
+  /* Customizing Pagefind to match our minimalist dark theme */
+  :global(.pagefind-ui .pagefind-ui__result-thumb) {
+    display: none;
+  }
+  :global(.pagefind-ui .pagefind-ui__search-input) {
+    background-color: #f3f4f6; /* gray-100 */
+    border: 1px solid #e5e7eb; /* gray-200 */
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+  :global(.pagefind-ui .pagefind-ui__search-clear) {
+    top: 14px;
+  }
+  /* Dark Mode Overrides (Class-based) */
+  :global(.dark .pagefind-ui .pagefind-ui__search-input) {
+    background-color: #1f2937; /* gray-800 */
+    border-color: #374151; /* gray-700 */
+    color: white;
+  }
+  :global(.dark .pagefind-ui .pagefind-ui__result-link) {
+    color: #60a5fa; /* blue-400 */
+  }
+  :global(.dark .pagefind-ui .pagefind-ui__result-excerpt) {
+    color: #9ca3af; /* gray-400 */
+  }
+  :global(.dark .pagefind-ui .pagefind-ui__message) {
+    color: #9ca3af; /* gray-400 */
+  }
+  :global(.dark .pagefind-ui .pagefind-ui__drawer) {
+    border-color: #374151; /* gray-700 */
+  }
+</style>
+
+<div id="search" class="w-full max-w-xl mx-auto my-8"></div>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    new PagefindUI({ 
+        element: "#search", 
+        showSubResults: true,
+        showImages: false,
+        translations: {
+            placeholder: "Search error library..."
+        }
+    });
+  });
+</script>

@@ -1,0 +1,38 @@
+---
+const { pathname } = Astro.url;
+
+// Função limpa para trocar apenas o prefixo do idioma
+function getLangLink(targetLang: string) {
+  // Pega qual o lang atual da URL
+  // Ex: /blog/en/foo -> 'en'
+  // Ex: / -> undefined
+  const segments = pathname.split('/').filter(Boolean); // Remove empty strings
+  // logic: root is [], or ['pt'], or ['blog', 'en', 'foo']
+  
+  // Se for Home
+  if (segments.length === 0 || (segments.length === 1 && ['en', 'pt', 'es'].includes(segments[0]))) {
+      return targetLang === 'en' ? '/' : `/${targetLang}/`;
+  }
+  
+  // Se for artigo (start with blog)
+  // path is /blog/lang/slug
+  if (segments[0] === 'blog') {
+      const currentLang = segments[1]; // 'en', 'pt', 'es'
+      if (!['en', 'pt', 'es'].includes(currentLang)) {
+          // weird state, maybe fallback to home
+          return targetLang === 'en' ? '/' : `/${targetLang}/`;
+      }
+      return pathname.replace(`/${currentLang}/`, `/${targetLang}/`);
+  }
+
+  // Fallback default
+  return targetLang === 'en' ? '/' : `/${targetLang}/`;
+}
+---
+<div class="flex items-center gap-3 text-sm font-medium font-mono">
+  <a href={getLangLink('en')} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🇺🇸 EN</a>
+  <span class="text-gray-300 dark:text-gray-700">|</span>
+  <a href={getLangLink('pt')} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🇧🇷 PT</a>
+  <span class="text-gray-300 dark:text-gray-700">|</span>
+  <a href={getLangLink('es')} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">🇪🇸 ES</a>
+</div>

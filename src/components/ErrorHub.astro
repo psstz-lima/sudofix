@@ -1,0 +1,97 @@
+---
+import Search from './Search.astro';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  lang: 'en' | 'pt' | 'es';
+}
+
+const { lang } = Astro.props;
+
+const posts = await getCollection('blog');
+
+// Text translations
+const ui = {
+  en: {
+    title: 'SudoFix Hub',
+    subtitle: 'The comprehensive database for programming errors.',
+    indexed: 'articles indexed.',
+    latest: 'Latest Errors',
+  },
+  pt: {
+    title: 'SudoFix Hub',
+    subtitle: 'O banco de dados abrangente para erros de programação.',
+    indexed: 'artigos indexados.',
+    latest: 'Erros Recentes',
+  },
+  es: {
+    title: 'SudoFix Hub',
+    subtitle: 'La base de datos completa para errores de programación.',
+    indexed: 'artículos indexados.',
+    latest: 'Errores Recientes',
+  }
+};
+
+const t = ui[lang];
+
+// Filter posts by language
+const localPosts = posts
+    .filter(post => post.slug.startsWith(`${lang}/`))
+    .sort((a, b) => new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf());
+
+// Helper for displaying title properly
+const cleanTitle = (title: string) => {
+    const parts = title.split(':');
+    return {
+        type: parts[0],
+        desc: parts.slice(1).join(':').trim() || title
+    };
+};
+
+// Flags
+const flags = {
+    en: '🇺🇸',
+    pt: '🇧🇷',
+    es: '🇪🇸',
+};
+
+// Language label helper for the section header
+const langLabel = {
+    en: '(English)',
+    pt: '(Português)',
+    es: '(Español)'
+}
+---
+
+<main class="max-w-6xl mx-auto px-4 py-12">
+    <div class="mb-12 text-center">
+        <h1 class="text-5xl font-bold tracking-tight mb-4 text-gray-900 dark:text-gray-100">{t.title}</h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            {t.subtitle} <br/>
+            <span class="text-sm opacity-75">{posts.length} {t.indexed}</span>
+        </p>
+    </div>
+
+    <Search />
+
+    <div class="mt-16 space-y-20">
+        
+        <section>
+            <div class="flex items-center gap-3 mb-6 border-b border-gray-200 dark:border-gray-800 pb-4">
+                <span class="text-2xl">{flags[lang]}</span>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">{t.latest} {langLabel[lang]}</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {localPosts.slice(0, 12).map((post) => {
+                    const { type, desc } = cleanTitle(post.data.title);
+                    return (
+                    <a href={`/blog/${post.slug}`} class="block p-6 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg hover:border-blue-500 dark:hover:border-blue-500 transition-all hover:shadow-md">
+                        <h3 class="font-mono text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">{type}</h3>
+                        <p class="text-gray-900 dark:text-gray-100 font-medium leading-snug">{desc}</p>
+                    </a>
+                )})}
+            </div>
+        </section>
+
+    </div>
+</main>

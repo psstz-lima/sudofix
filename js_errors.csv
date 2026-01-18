@@ -1,0 +1,51 @@
+error_code,context,solution_hint
+ReferenceError,console.log(undefinedVar),Variable 'undefinedVar' is not defined. Checks for typos or scope issues.
+TypeError,null.toString(),Cannot read property 'toString' of null. Check for null values before accessing properties.
+TypeError,undefined.toString(),Cannot read property 'toString' of undefined. Check for undefined values.
+SyntaxError,if (x = 5),Invalid assignment in condition. Use '==' or '===' for comparison.
+SyntaxError,const x;,Missing initializer in const declaration. 'const' variables must be initialized.
+TypeError,const x = 1; x = 2;,Assignment to constant variable. Use 'let' for reassignable variables.
+RangeError,new Array(-1),Invalid array length. Array length must be a positive integer.
+URIError,decodeURIComponent('%'),URI malformed. The sequence to decode is not a valid URI component.
+SyntaxError,JSON.parse('{a:1}'),Unexpected token. Keys in JSON must be double-quoted strings.
+TypeError,fn is not a function,The value being called is not a function. Check if the variable is correct.
+ReferenceError,Cannot access 'x' before initialization,Temporal Dead Zone. 'let' and 'const' variables cannot be accessed before declaration.
+SyntaxError,Unexpected token },Extra or missing curly brace/bracket. Check code balance.
+TypeError,obj is not iterable,The object is not iterable (cannot use for...of). Ensure it implements the iterator protocol.
+RangeError,Maximum call stack size exceeded,Recursion too deep or infinite loop. Check base cases.
+SyntaxError,Unexpected end of input,Code ended prematurely. Check for unclosed braces or parentheses.
+TypeError,Cannot read properties of undefined (reading 'x'),Accessing property on undefined. Optional chaining (?.) can help.
+SyntaxError,Identifier 'x' has already been declared,Variable name collision. 'let' and 'const' cannot redeclare variables in the same scope.
+TypeError,Cyclic object value,Converting circular structure to JSON. Use a cycle-handling library or remove cycles.
+DOMException,Failed to execute 'querySelector',Invalid selector syntax. Check CSS selector validity.
+NetworkError,fetch('https://api.com'),"Network request failed. Check CORS, connectivity, or URL."
+TypeError,Promise resolver undefined is not a function,Promise constructor requires a function argument.
+SyntaxError,await is only valid in async functions,Use 'async' keyword on the function containing 'await'.
+TypeError,class constructor Foo cannot be invoked without 'new',Classes must be instantiated with 'new'.
+SyntaxError,Unexpected token export,Exporting in non-module environment. Use 'module.exports' or enable ES modules.
+Error,MODULE_NOT_FOUND,Module not found. Check path and npm install.
+TypeError,res.json is not a function,Response object doesn't have .json(). Check if using creating middleware properly.
+UsageError,npm start,Missing script: 'start'. Add 'start' script to package.json.
+Error,EADDRINUSE,Port already in use. Kill the process using the port or change ports.
+Error,ECONNREFUSED,Connection refused. Server is likely down or wrong port.
+SyntaxError,Unexpected token <,Often happens when returning HTML (404 page) instead of JSON.
+TypeError,Cannot destructure property 'x' of 'undefined',Destructuring failed because the source object is undefined.
+Error,Cross-Origin Request Blocked (CORS),Missing Access-Control-Allow-Origin header on server.
+TypeError,x.map is not a function,x is not an array. Verify data type before using map.
+Error,process is not defined,Accessing Node.js 'process' global in browser environment.
+ReferenceError,document is not defined,Accessing DOM 'document' in Node.js environment.
+ReferenceError,window is not defined,Accessing browser 'window' in Node.js environment.
+TypeError,Invalid time value,Date object created with invalid date string/timestamp.
+SyntaxError,Unexpected string,"Missing comma, operator or semicolon between strings/values."
+RangeError,Precision is out of range,toFixed() digits argument must be between 0 and 100.
+TypeError,BigInt cannot be converted to JSON,JSON.stringify() fails with BigInt. specific serialization needed.
+Error,ENOSPC,No space left on device or file watch limit reached.
+Error,EACCES,Permission denied. Check file/folder permissions (often needs sudo).
+SyntaxError,Rest parameter must be last formal parameter,Spread operator (...) must be at the end of function arguments.
+SyntaxError,Invalid regular expression flag,"Regex flags must be valid (g, i, m, etc)."
+TypeError,super constructor may only be called once,Subclass constructor called super() multiple times.
+ReferenceError,this is not defined,Accessing 'this' in a context where it's undefined (e.g. strict mode function).
+Error,Heap out of memory,Node.js process ran out of RAM. Increase --max-old-space-size.
+Error,Callback must be a function,Expected a callback function but got something else.
+TypeError,Reduce of empty array with no initial value,Calling reduce() on empty array without initial value.
+Error,UnhandledPromiseRejectionWarning,Promise rejected but no .catch() handler attached.
